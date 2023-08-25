@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>CAPS Book Store</title>
+        <style>
+            .body {
+                background-color: whitesmoke;
+            }
+            .container {
+                margin: auto;
+                width: 1024px;
+                padding-top: 64px;
+                font-family: Helvetica, sans-serif;
+            }
+            .link {
+                padding-bottom: 8px;
+            }
+            .authors_list {
+                padding-left: 0px;
+            }
+            .author_divider {
+                padding-bottom: 12px;
+                display: block;
+            }
+            .books_list {
+                padding-left: 32px;
+            }
+            a {
+                font-weight: 600;
+                text-decoration: none;
+                color: slateblue;
+            }
+            li {
+                list-style-type: none;
+                padding-bottom: 4px;
+            }
+        </style>
+    </head>
+    <body class="body">
+        <div class="container">
+            <h1>
+                CAPS Book Store
+            </h1>
+            <div>
+                <div>
+                    <div class="link">
+                        <a href="/books/manage">
+                            > Manage books
+                        </a>
+                    </div>
+                    <div class="link">
+                        <a href="/books/authors/manage">
+                            > Manage authors
+                        </a>
+                    </div>
+                </div>                 
+                <div>
+                    <h2>
+                        Books by author
+                    </h2>
+                    <div>
+                        <ul class="authors_list">
+                            {% for author, books in books_by_author %}
+                                <li>{{ author }}</li>
+                                <ul class="books_list">
+                                    {% for book in books %}
+                                    <li>{{ book }}</li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="author_divider"></div>
+                                {% endfor %}
+                        </ul>
+                    </div>
+                </div>             
+            </div>
+        </div>
+    </body>
+</html>

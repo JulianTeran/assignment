@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>CAPS Book Store</title>
+        <style>
+            .body {
+                background-color: whitesmoke;
+            }
+            .container {
+                margin: auto;
+                width: 1024px;
+                padding-top: 64px;
+                font-family: Helvetica, sans-serif;
+            }
+            .link {
+                padding-bottom: 8px;
+            }
+            .item_title {
+                padding-left: 4px;
+            }
+            .form_item {
+                padding-bottom: 12px;
+            }
+            .form_button {
+                margin-top: 16px;
+                width: 128px;
+            }
+            .books_list {
+                padding-left: 0px;
+            }
+            a {
+                font-weight: 600;
+                text-decoration: none;
+                color: slateblue;
+            }
+            li {
+                list-style-type: none;
+                padding-bottom: 8px;
+            }
+        </style>           
+    </head>
+    <body class="body">
+        <div class="container">
+            <h1>
+                CAPS Book Store
+            </h1>
+            <div>
+                <div>
+                    <div class="link">
+                        <a href="/books">
+                            > Return
+                        </a>
+                    </div>
+                    <div>
+                        <h2>
+                            Create new book
+                        </h2>
+                        <form action="/books/create" method="post" id="book_form">
+                            {% csrf_token %}
+                            <div class="form_item">
+                                <label for="title">Title: </label>
+                                <input id="title" type="text" name="title">
+                            </div>
+                            <div class="form_item">
+                                <label for="date">Date: </label>
+                                <input id="date" type="date" name="date">
+                            </div>
+                            <div>
+                                <label for="author_id">Author: </label>
+                                <select id="author_id" name="author_id" form="book_form">
+                                    {% for author in author_list %}
+                                        <option value="{{ author.pk }}">
+                                            {{ author }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <input class="form_button" type="submit" value="Submit book">
+                        </form>                        
+                    </div>                    
+                    <div>
+                        <h2>
+                            List of books
+                        </h2>
+                        <ul class="books_list">
+                            {% for book in books_with_authors %}
+                                <li>
+                                    <form action="/books/delete" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="book_id" value="{{ book.pk }}">
+                                        <input type="submit" value="×">
+                                        <span class="item_title">
+                                            {{ book }}{{ " by "}}{{ book.author }}
+                                        </span>
+                                    </form>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>             
+            </div>
+        </div>
+    </body>
+</html>

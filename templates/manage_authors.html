@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>CAPS Book Store</title>
+        <style>
+            .body {
+                background-color: whitesmoke;
+            }
+            .container {
+                margin: auto;
+                width: 1024px;
+                padding-top: 64px;
+                font-family: Helvetica, sans-serif;
+            }
+            .link {
+                padding-bottom: 8px;
+            }
+            .item_title {
+                padding-left: 4px;
+            }            
+            .form_item {
+                padding-bottom: 12px;
+            }
+            .form_button {
+                margin-top: 16px;
+                width: 128px;
+            }
+            .authors_list {
+                padding-left: 0px;
+            }
+            a {
+                font-weight: 600;
+                text-decoration: none;
+                color: slateblue;
+            }
+            li {
+                list-style-type: none;
+                padding-bottom: 8px;
+            }
+        </style>        
+    </head>    
+    <body class="body">
+        <div class="container">
+            <h1>
+                CAPS Book Store
+            </h1>
+            <div>
+                <div>
+                    <div class="link">
+                        <a href="/books">
+                            > Return
+                        </a>
+                    </div>
+                    <div>
+                        <h2>
+                            Create new author
+                        </h2>
+                        <form action="/books/authors/create" method="post">
+                            {% csrf_token %}
+                            <div class="form_item">
+                                <label for="first_name">First name: </label>
+                                <input id="first_name" type="text" name="first_name">
+                            </div>
+                            <div>
+                                <label for="last_name">Last name: </label>
+                                <input id="last_name" type="text" name="last_name">
+                            </div>
+                            <input class="form_button" type="submit" value="Submit author">
+                        </form>                        
+                    </div>
+                    <div>
+                        <h2>
+                            List of authors
+                        </h2>
+                        <ul class="authors_list">
+                            {% for author in author_list %}
+                                <li>
+                                    <form action="/books/authors/delete" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="author_id" value="{{ author.pk }}">
+                                        <input type="submit" value="×">
+                                        <span class="item_title">
+                                            {{ author }}
+                                        </span>
+                                    </form>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>             
+            </div>
+        </div>
+    </body>
+</html>
